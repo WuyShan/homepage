@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>我的个人主页</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232f5d62'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23ffffff' font-family='sans-serif'%3EW%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #1f2933;
+      --ink-soft: #52606d;
+      --line: #e4e7eb;
+      --bg: #f7f8f7;
+      --card: #ffffff;
+      --accent: #2f5d62;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 64px; }
+    header.intro { padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+    .avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 16px;
+    }
+    h1 { font-size: 28px; letter-spacing: 0.5px; }
+    .tagline { color: var(--ink-soft); margin-top: 6px; font-size: 16px; }
+    section { margin-top: 36px; }
+    h2 {
+      font-size: 15px; color: var(--accent); letter-spacing: 2px;
+      margin-bottom: 14px; text-transform: uppercase;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 10px; padding: 20px 22px;
+    }
+    .card p { color: var(--ink-soft); }
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag {
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 6px 14px; font-size: 14px; color: var(--ink-soft);
+      background: var(--card);
+    }
+    .contact-list { list-style: none; }
+    .contact-list li { padding: 6px 0; color: var(--ink-soft); }
+    .contact-list a { color: var(--accent); text-decoration: none; }
+    footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="intro">
+      <div class="avatar">W</div>
+      <h1>WuyShan</h1>
+      <p class="tagline">软件工程专业学生 / 正在学习后端开发</p>
+    </header>
+
+    <section>
+      <h2>关于我</h2>
+      <div class="card">
+        <!-- 简介占位：用两三句话介绍自己，例如学校、方向、兴趣 -->
+        <p>你好，我是一名软件工程专业的本科生，目前主要学习 Java 后端开发与 Web 基础，喜欢动手做小项目，也在持续补齐计算机基础。这里是我的 GitHub 个人主页，后续会陆续放上自己的练习项目与学习记录。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>学习方向 / 技能</h2>
+      <div class="tags">
+        <!-- 标签可按实际情况增删 -->
+        <span class="tag">Java</span>
+        <span class="tag">Spring Boot</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">HTML / CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Git</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>联系方式</h2>
+      <div class="card">
+        <ul class="contact-list">
+          <!-- 换成你自己的邮箱；不想公开可以删掉这一项 -->
+          <li>邮箱：<a href="mailto:1932716881@qq.com">1932716881@qq.com</a></li>
+          <li>GitHub：<a href="https://github.com/WuyShan">https://github.com/WuyShan</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <!-- 年份可自行修改 -->
+      <p>© 2026 WuyShan · 本页面托管在 GitHub</p>
+    </footer>
+  </div>
+</body>
+</html>
