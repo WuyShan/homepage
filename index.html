@@ -3,100 +3,1671 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>我的个人主页</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232f5d62'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23ffffff' font-family='sans-serif'%3EW%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="WuyShan 的个人主页：软件工程、Java 后端与 Web，以及一个安静的私人歌单。">
+  <title>WuyShan · Code on Side A, Music on Side B</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316130f'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23d8552f' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23d8552f'/%3E%3C/svg%3E">
   <style>
     :root {
-      --ink: #1f2933;
-      --ink-soft: #52606d;
-      --line: #e4e7eb;
-      --bg: #f7f8f7;
-      --card: #ffffff;
-      --accent: #2f5d62;
+      --paper: #f1ece2;
+      --paper-deep: #e5dccb;
+      --cream: #fbf8f1;
+      --ink: #16130f;
+      --muted: #70675a;
+      --line: rgba(22, 19, 15, .14);
+      --orange: #d8552f;
+      --green: #264d3f;
+      --lime: #b7d36b;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Songti SC", "STSong", serif;
+      --sans: "Avenir Next", "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --shell: min(1180px, calc(100% - 48px));
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+      font-family: var(--sans);
       color: var(--ink);
+      background:
+        radial-gradient(1100px 620px at 88% -8%, rgba(216, 85, 47, .09), transparent 62%),
+        radial-gradient(900px 540px at -8% 26%, rgba(38, 77, 63, .07), transparent 60%),
+        var(--paper);
       line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 64px; }
-    header.intro { padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-    .avatar {
-      width: 72px; height: 72px; border-radius: 50%;
-      background: var(--accent); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; margin-bottom: 16px;
+
+    ::selection { background: var(--orange); color: var(--cream); }
+
+    a { color: inherit; }
+
+    img, svg { display: block; }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      opacity: .22;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
     }
-    h1 { font-size: 28px; letter-spacing: 0.5px; }
-    .tagline { color: var(--ink-soft); margin-top: 6px; font-size: 16px; }
-    section { margin-top: 36px; }
-    h2 {
-      font-size: 15px; color: var(--accent); letter-spacing: 2px;
-      margin-bottom: 14px; text-transform: uppercase;
+
+    .shell { width: var(--shell); margin: 0 auto; }
+
+    /* ---------- header ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(241, 236, 226, .8);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
     }
-    .card {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 10px; padding: 20px 22px;
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 0;
     }
-    .card p { color: var(--ink-soft); }
-    .tags { display: flex; flex-wrap: wrap; gap: 10px; }
-    .tag {
-      border: 1px solid var(--line); border-radius: 999px;
-      padding: 6px 14px; font-size: 14px; color: var(--ink-soft);
-      background: var(--card);
+
+    .brand {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+      text-decoration: none;
+      line-height: 1;
     }
-    .contact-list { list-style: none; }
-    .contact-list li { padding: 6px 0; color: var(--ink-soft); }
-    .contact-list a { color: var(--accent); text-decoration: none; }
-    footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 13px; }
+
+    .brand span { color: var(--orange); }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav a {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color .2s ease;
+    }
+
+    .nav a:hover { color: var(--ink); }
+
+    .nav-cta {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 15px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .nav-cta:hover { background: var(--ink); color: var(--cream); }
+
+    .nav-cta svg { width: 12px; height: 12px; }
+
+    /* ---------- hero ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 54px;
+      padding: 74px 0 62px;
+    }
+
+    .hero-copy { min-width: 0; }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 38px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(52px, 6.4vw, 92px);
+      font-weight: 600;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+      margin: 25px 0 26px;
+    }
+
+    .hero h1 em {
+      color: var(--orange);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .hero-lede {
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.95;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: transform .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn svg { width: 13px; height: 13px; }
+
+    .btn-primary { background: var(--ink); color: var(--cream); }
+    .btn-primary:hover { background: var(--orange); }
+
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--ink);
+      background: rgba(251, 248, 241, .35);
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 38px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .hero-meta span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .hero-meta strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .01em;
+    }
+
+    /* ---------- player ---------- */
+    .player-wrap { display: flex; justify-content: flex-end; min-width: 0; }
+
+    .player-card {
+      position: relative;
+      width: 100%;
+      max-width: 430px;
+      padding: 22px;
+      overflow: hidden;
+      color: var(--cream);
+      background: var(--ink);
+      border-radius: 26px;
+      box-shadow: 0 36px 70px -34px rgba(22, 19, 15, .62);
+    }
+
+    .player-card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -120px;
+      top: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 85, 47, .42), transparent 68%);
+      pointer-events: none;
+    }
+
+    .player-top {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .16em;
+      color: rgba(251, 248, 241, .56);
+    }
+
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .live i {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 0 3px rgba(183, 211, 107, .13);
+    }
+
+    .record-stage {
+      position: relative;
+      height: 300px;
+      margin: 12px 0 2px;
+    }
+
+    .sleeve {
+      position: absolute;
+      left: 0;
+      top: 28px;
+      z-index: 2;
+      width: 238px;
+      height: 238px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: var(--green);
+      box-shadow: 0 22px 36px rgba(0, 0, 0, .38);
+    }
+
+    .sleeve-art {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(251, 248, 241, .08), transparent 46%),
+        repeating-linear-gradient(115deg, transparent 0 23px, rgba(251, 248, 241, .07) 23px 24px),
+        var(--green);
+    }
+
+    .sleeve-art::before {
+      content: "";
+      position: absolute;
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      border: 1px solid rgba(251, 248, 241, .46);
+      right: -46px;
+      top: -52px;
+    }
+
+    .sleeve-art::after {
+      content: "";
+      position: absolute;
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      right: 22px;
+      bottom: 20px;
+      background: var(--orange);
+      box-shadow: 0 0 0 14px rgba(216, 85, 47, .12);
+    }
+
+    .sleeve-copy {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .18em;
+      color: rgba(251, 248, 241, .7);
+    }
+
+    .sleeve-copy strong {
+      font-family: var(--serif);
+      font-size: 25px;
+      line-height: 1.02;
+      letter-spacing: -.02em;
+      font-weight: 500;
+      color: var(--cream);
+    }
+
+    .vinyl {
+      position: absolute;
+      z-index: 1;
+      right: -2px;
+      top: 54px;
+      width: 232px;
+      height: 232px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: repeating-radial-gradient(circle at 50% 50%, #0b0a09 0 2px, #191613 2px 4px, #0b0a09 4px 5px);
+      box-shadow: 0 24px 38px rgba(0, 0, 0, .45);
+      animation: spin 18s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .vinyl::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, transparent 0 17%, rgba(255, 255, 255, .11) 22%, transparent 29% 54%, rgba(255, 255, 255, .06) 60%, transparent 67%);
+    }
+
+    .player-card[data-playing="true"] .vinyl { animation-play-state: running; }
+
+    .vinyl-label {
+      position: relative;
+      z-index: 2;
+      width: 82px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border: 4px solid #13100d;
+      border-radius: 50%;
+      background: var(--orange);
+      color: var(--cream);
+      font-family: var(--serif);
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .track-row {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .track-kicker {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .18em;
+      color: rgba(251, 248, 241, .48);
+      margin-bottom: 5px;
+    }
+
+    .track-title {
+      font-family: var(--serif);
+      font-size: 27px;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+    }
+
+    .track-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: rgba(251, 248, 241, .52);
+    }
+
+    .play-btn {
+      flex: none;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: var(--orange);
+      color: var(--cream);
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .play-btn:hover { transform: scale(1.06); background: #e3643c; }
+    .play-btn:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; }
+    .play-btn svg { width: 22px; height: 22px; }
+    .icon-pause { display: none; }
+    .player-card[data-playing="true"] .icon-play { display: none; }
+    .player-card[data-playing="true"] .icon-pause { display: block; }
+
+    .progress {
+      position: relative;
+      z-index: 3;
+      height: 3px;
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(251, 248, 241, .16);
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--orange);
+      transition: width .45s linear;
+    }
+
+    .time-row {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      color: rgba(251, 248, 241, .46);
+    }
+
+    .eq {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 24px;
+      margin-top: 14px;
+    }
+
+    .eq span {
+      width: 4px;
+      height: 20%;
+      border-radius: 99px;
+      background: var(--orange);
+      animation: eq 1s ease-in-out infinite;
+      animation-play-state: paused;
+    }
+
+    .eq span:nth-child(2) { animation-delay: -.18s; animation-duration: .82s; }
+    .eq span:nth-child(3) { animation-delay: -.36s; animation-duration: 1.15s; }
+    .eq span:nth-child(4) { animation-delay: -.12s; animation-duration: .94s; }
+    .eq span:nth-child(5) { animation-delay: -.48s; animation-duration: 1.06s; }
+    .eq span:nth-child(6) { animation-delay: -.26s; animation-duration: .88s; }
+    .eq span:nth-child(7) { animation-delay: -.6s; animation-duration: 1.2s; }
+
+    .player-card[data-playing="true"] .eq span { animation-play-state: running; }
+
+    /* ---------- marquee ---------- */
+    .marquee {
+      overflow: hidden;
+      padding: 15px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 46px;
+      animation: marquee 30s linear infinite;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .marquee-track span::after {
+      content: "·";
+      margin-left: 46px;
+      color: var(--orange);
+    }
+
+    /* ---------- sections ---------- */
+    .section {
+      padding: 96px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr);
+      gap: 40px;
+      margin-bottom: 42px;
+    }
+
+    .section-index {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      padding-top: 5px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4.2vw, 56px);
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -.04em;
+    }
+
+    .section-title em { font-style: italic; color: var(--orange); font-weight: 500; }
+
+    .section-lede {
+      max-width: 590px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    /* ---------- about ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .about-card {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(251, 248, 241, .58);
+    }
+
+    .about-card.dark {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+
+    .about-card h3 {
+      font-family: var(--serif);
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+      margin-bottom: 12px;
+    }
+
+    .about-card p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .about-card.dark p { color: rgba(251, 248, 241, .64); }
+
+    .mini-list {
+      display: grid;
+      gap: 11px;
+      margin-top: 22px;
+      list-style: none;
+    }
+
+    .mini-list li {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .mini-list li::before {
+      content: "";
+      flex: none;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--orange);
+      transform: translateY(-2px);
+    }
+
+    .about-card.dark .mini-list li { color: rgba(251, 248, 241, .64); }
+
+    .covers {
+      position: relative;
+      height: 212px;
+      margin-top: 18px;
+    }
+
+    .cover {
+      position: absolute;
+      width: 142px;
+      height: 142px;
+      border-radius: 3px;
+      box-shadow: 0 18px 28px rgba(0, 0, 0, .32);
+    }
+
+    .cover-one {
+      left: 6px;
+      top: 38px;
+      transform: rotate(-8deg);
+      background:
+        radial-gradient(circle at 68% 32%, var(--orange) 0 22%, transparent 23%),
+        repeating-linear-gradient(115deg, transparent 0 17px, rgba(251, 248, 241, .1) 17px 18px),
+        #1f3d33;
+    }
+
+    .cover-two {
+      left: 78px;
+      top: 14px;
+      transform: rotate(2deg);
+      background:
+        linear-gradient(160deg, #e7c9a2 0 46%, #b65c3b 46% 100%);
+    }
+
+    .cover-two::after {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(22, 19, 15, .4);
+      border-radius: 50%;
+    }
+
+    .cover-three {
+      left: 152px;
+      top: 50px;
+      transform: rotate(9deg);
+      background:
+        repeating-linear-gradient(0deg, transparent 0 19px, rgba(251, 248, 241, .16) 19px 20px),
+        linear-gradient(135deg, #1b1a18, #3d3a34);
+    }
+
+    .tonearm {
+      position: absolute;
+      right: 4px;
+      top: 6px;
+      width: 1px;
+      height: 176px;
+      background: rgba(251, 248, 241, .35);
+      transform: rotate(19deg);
+      transform-origin: top;
+    }
+
+    .tonearm::before {
+      content: "";
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--cream);
+    }
+
+    /* ---------- music dna ---------- */
+    .dna-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .dna-card {
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(251, 248, 241, .54);
+    }
+
+    .dna-genre {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .dna-genre strong {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+
+    .dna-genre span {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .dna-en {
+      margin-top: 2px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .dna-track {
+      height: 5px;
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(22, 19, 15, .1);
+    }
+
+    .dna-track span {
+      display: block;
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--orange);
+    }
+
+    .dna-note {
+      margin-top: 9px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    /* ---------- playlists ---------- */
+    .playlist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .playlist-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(251, 248, 241, .54);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .playlist-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 40px -28px rgba(22, 19, 15, .45);
+    }
+
+    .playlist-art {
+      position: relative;
+      height: 188px;
+      overflow: hidden;
+    }
+
+    .playlist-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(22, 19, 15, .28));
+    }
+
+    .art-night {
+      background:
+        radial-gradient(circle at 72% 34%, #f2b47f 0 8%, transparent 8.5%),
+        radial-gradient(circle at 72% 34%, rgba(242, 180, 127, .2) 0 22%, transparent 22.5%),
+        linear-gradient(155deg, #1c2a33, #0f1518);
+    }
+
+    .art-night::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 42%;
+      background: repeating-linear-gradient(90deg, rgba(251, 248, 241, .13) 0 1px, transparent 1px 17px);
+      transform: skewY(-4deg);
+      transform-origin: bottom;
+    }
+
+    .art-city {
+      background:
+        linear-gradient(180deg, #e9b7a0 0 56%, #8c453b 56% 100%);
+    }
+
+    .art-city::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 58%;
+      height: 1px;
+      background: rgba(251, 248, 241, .55);
+      box-shadow: 0 22px 0 rgba(251, 248, 241, .22), 0 44px 0 rgba(251, 248, 241, .12);
+    }
+
+    .art-city::after {
+      content: "";
+      position: absolute;
+      width: 92px;
+      height: 92px;
+      left: 50%;
+      top: 47%;
+      border-radius: 50%;
+      border: 1px solid rgba(251, 248, 241, .55);
+      transform: translate(-50%, -50%);
+    }
+
+    .art-weekend {
+      background:
+        repeating-radial-gradient(circle at 30% 120%, transparent 0 22px, rgba(251, 248, 241, .13) 22px 23px),
+        linear-gradient(135deg, #42614f, #1e332b);
+    }
+
+    .art-weekend::before {
+      content: "";
+      position: absolute;
+      width: 128px;
+      height: 128px;
+      right: 18px;
+      top: 28px;
+      border-radius: 50%;
+      background: #d9b382;
+      opacity: .9;
+    }
+
+    .playlist-body { padding: 20px 21px 22px; }
+
+    .playlist-kicker {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    .playlist-body h3 {
+      margin-top: 5px;
+      font-family: var(--serif);
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+
+    .playlist-body p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .playlist-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 17px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- skills ---------- */
+    .skills { border-top: 1px solid var(--line); }
+
+    .skill {
+      display: grid;
+      grid-template-columns: 58px minmax(160px, 1fr) minmax(120px, 1.4fr) 94px;
+      align-items: center;
+      gap: 20px;
+      padding: 19px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .skill-index {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+
+    .skill-name {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -.02em;
+    }
+
+    .skill-bar {
+      height: 4px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(22, 19, 15, .1);
+    }
+
+    .skill-bar span {
+      display: block;
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--ink);
+    }
+
+    .skill:nth-child(2n) .skill-bar span { background: var(--orange); }
+
+    .skill-level {
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* ---------- contact ---------- */
+    .contact {
+      position: relative;
+      overflow: hidden;
+      margin: 96px 0 24px;
+      padding: 56px;
+      border-radius: 28px;
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .contact::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -160px;
+      bottom: -230px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 85, 47, .45), transparent 68%);
+      pointer-events: none;
+    }
+
+    .contact-kicker {
+      position: relative;
+      z-index: 2;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(251, 248, 241, .5);
+    }
+
+    .contact h2 {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+      margin-top: 16px;
+      font-family: var(--serif);
+      font-size: clamp(38px, 5.4vw, 66px);
+      font-weight: 500;
+      line-height: 1.16;
+      letter-spacing: -.045em;
+    }
+
+    .contact h2 em { font-style: italic; color: var(--orange); }
+
+    .contact p {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+      margin-top: 18px;
+      color: rgba(251, 248, 241, .64);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .contact-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .contact .btn-primary { background: var(--orange); color: var(--cream); }
+    .contact .btn-primary:hover { background: var(--cream); color: var(--ink); }
+
+    .contact .btn-ghost {
+      border-color: rgba(251, 248, 241, .28);
+      color: var(--cream);
+      background: transparent;
+    }
+
+    .contact .btn-ghost:hover { border-color: var(--cream); }
+
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 0 42px;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- motion ---------- */
+    .js [data-reveal] {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .75s ease, transform .75s cubic-bezier(.2, .7, .2, 1);
+    }
+
+    .js [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @keyframes eq {
+      0%, 100% { height: 18%; }
+      50% { height: 96%; }
+    }
+
+    @keyframes marquee {
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .vinyl, .eq span, .marquee-track { animation: none !important; }
+      .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: minmax(0, 1fr); gap: 42px; padding-top: 56px; }
+      .player-wrap { justify-content: flex-start; }
+      .dna-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .playlist-grid { grid-template-columns: 1fr; }
+      .playlist-art { height: 210px; }
+      .section-head { grid-template-columns: 110px minmax(0, 1fr); gap: 26px; }
+    }
+
+    @media (max-width: 760px) {
+      :root { --shell: calc(100% - 36px); }
+      .header-inner { padding: 13px 0; }
+      .nav { display: none; }
+      .brand { font-size: 25px; }
+      .nav-cta { padding: 8px 13px; font-size: 9px; }
+      .hero { padding: 44px 0 40px; }
+      .hero h1 { font-size: clamp(42px, 12vw, 64px); margin: 20px 0 22px; }
+      .hero-lede { font-size: 15px; max-width: 100%; }
+      .hero-meta { gap: 18px 24px; }
+      .player-card { width: 100%; max-width: 100%; padding: 18px; }
+      .record-stage { height: 280px; }
+      .sleeve { width: 218px; height: 218px; top: 30px; }
+      .vinyl { width: 212px; height: 212px; top: 54px; }
+      .section { padding: 66px 0; }
+      .section-head { grid-template-columns: 1fr; gap: 10px; margin-bottom: 30px; }
+      .section-index { padding-top: 0; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-card { padding: 24px; }
+      .dna-grid { grid-template-columns: 1fr 1fr; gap: 11px; }
+      .dna-card { padding: 17px; }
+      .dna-genre strong { font-size: 19px; }
+      .skill { grid-template-columns: 38px minmax(0, 1fr) 82px; gap: 12px; }
+      .skill-bar { grid-column: 2 / 4; grid-row: 2; }
+      .skill-level { text-align: right; }
+      .skill-name { font-size: 21px; }
+      .contact { margin: 64px 0 18px; padding: 34px 24px; border-radius: 22px; }
+      .contact p { font-size: 14px; }
+      .site-footer { flex-direction: column; gap: 7px; padding-bottom: 30px; }
+    }
+
+    @media (max-width: 430px) {
+      .dna-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(36px, 11vw, 48px); line-height: 1.06; }
+      .hero-actions .btn { flex: 1; min-width: 0; }
+      .hero-meta strong { font-size: 12px; }
+      .record-stage { height: 258px; }
+      .sleeve { width: 196px; height: 196px; top: 31px; }
+      .sleeve-copy strong { font-size: 21px; }
+      .vinyl { width: 192px; height: 192px; top: 54px; }
+      .vinyl-label { width: 70px; height: 70px; font-size: 25px; }
+      .track-title { font-size: 24px; }
+      .play-btn { width: 52px; height: 52px; }
+      .covers { height: 196px; }
+      .cover { width: 124px; height: 124px; }
+      .cover-three { left: 128px; }
+      .tonearm { height: 156px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="intro">
-      <div class="avatar">W</div>
-      <h1>WuyShan</h1>
-      <p class="tagline">软件工程专业学生 / 正在学习后端开发</p>
-    </header>
+  <div class="grain" aria-hidden="true"></div>
 
-    <section>
-      <h2>关于我</h2>
-      <div class="card">
-        <!-- 简介占位：用两三句话介绍自己，例如学校、方向、兴趣 -->
-        <p>你好，我是一名软件工程专业的本科生，目前主要学习 Java 后端开发与 Web 基础，喜欢动手做小项目，也在持续补齐计算机基础。这里是我的 GitHub 个人主页，后续会陆续放上自己的练习项目与学习记录。</p>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="WuyShan 首页">W<span>.</span></a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#about">关于</a>
+        <a href="#music">听觉</a>
+        <a href="#playlists">歌单</a>
+        <a href="#skills">技术</a>
+        <a href="#contact">联系</a>
+      </nav>
+      <a class="nav-cta" href="https://github.com/WuyShan" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Software Engineering / Music</p>
+          <h1>把代码写成<br><em>一段有节奏的</em><br>旋律。</h1>
+          <p class="hero-lede">
+            我是 WuyShan，软件工程专业本科生。白天写 Java 与 Web，夜里听唱片、整理歌单。
+            代码和音乐，是我理解世界的两种方式：一个讲究结构，一个允许即兴。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#music">
+              进入听觉空间
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/WuyShan" target="_blank" rel="noopener">
+              看看我的代码
+            </a>
+          </div>
+          <div class="hero-meta">
+            <div>
+              <span>Based in</span>
+              <strong>China · 在读本科生</strong>
+            </div>
+            <div>
+              <span>Focus</span>
+              <strong>Java 后端 / Web 基础</strong>
+            </div>
+            <div>
+              <span>Status</span>
+              <strong>持续学习，偶尔循环</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="player-wrap">
+          <div class="player-card" id="player" data-playing="false">
+            <div class="player-top">
+              <span>NOW PLAYING</span>
+              <span class="live"><i></i> WEB AUDIO</span>
+            </div>
+
+            <div class="record-stage">
+              <div class="sleeve" aria-hidden="true">
+                <div class="sleeve-art"></div>
+                <div class="sleeve-copy">
+                  <span>SIDE A</span>
+                  <strong>CODE<br>&amp; QUIET</strong>
+                  <span>2026 / W.</span>
+                </div>
+              </div>
+              <div class="vinyl" aria-hidden="true">
+                <div class="vinyl-label">W</div>
+              </div>
+            </div>
+
+            <div class="track-row">
+              <div>
+                <p class="track-kicker">GENERATIVE AMBIENT · 01</p>
+                <p class="track-title">Quiet Room</p>
+                <p class="track-sub">WuyShan · 实时生成的安静和弦</p>
+              </div>
+              <button class="play-btn" id="playBtn" type="button" aria-label="播放 Quiet Room" aria-pressed="false">
+                <span class="icon-play">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5.5v13l11-6.5z"/>
+                  </svg>
+                </span>
+                <span class="icon-pause">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+
+            <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+            <div class="time-row">
+              <span id="elapsed">0:00</span>
+              <span>LOOP / 28 SEC</span>
+            </div>
+
+            <div class="eq" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Java</span><span>Spring Boot</span><span>MySQL</span><span>HTML / CSS</span><span>JavaScript</span><span>Git</span>
+        <span>Ambient</span><span>City Pop</span><span>Post-rock</span><span>Piano</span>
+        <span>Java</span><span>Spring Boot</span><span>MySQL</span><span>HTML / CSS</span><span>JavaScript</span><span>Git</span>
+        <span>Ambient</span><span>City Pop</span><span>Post-rock</span><span>Piano</span>
       </div>
-    </section>
+    </div>
 
-    <section>
-      <h2>学习方向 / 技能</h2>
-      <div class="tags">
-        <!-- 标签可按实际情况增删 -->
-        <span class="tag">Java</span>
-        <span class="tag">Spring Boot</span>
-        <span class="tag">MySQL</span>
-        <span class="tag">HTML / CSS</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Git</span>
-      </div>
-    </section>
+    <div class="shell">
+      <!-- 01 about -->
+      <section class="section" id="about">
+        <div class="section-head" data-reveal>
+          <p class="section-index">01 / About</p>
+          <div>
+            <h2 class="section-title">写代码的人，<br>也是一个<em>认真听歌的人</em>。</h2>
+            <p class="section-lede">
+              我喜欢把复杂的事情拆成清晰的模块，也喜欢一首歌里慢慢铺开的结构。
+              这个主页是我的 A 面与 B 面：A 面是工程，B 面是听觉。
+            </p>
+          </div>
+        </div>
 
-    <section>
-      <h2>联系方式</h2>
-      <div class="card">
-        <ul class="contact-list">
-          <!-- 换成你自己的邮箱；不想公开可以删掉这一项 -->
-          <li>邮箱：<a href="mailto:1932716881@qq.com">1932716881@qq.com</a></li>
-          <li>GitHub：<a href="https://github.com/WuyShan">https://github.com/WuyShan</a></li>
-        </ul>
-      </div>
-    </section>
+        <div class="about-grid">
+          <article class="about-card" data-reveal>
+            <h3>Side A · 关于代码</h3>
+            <p>
+              我是一名软件工程专业的本科生，目前主要学习 Java 后端开发与 Web 基础。
+              平时会动手做小项目，也在持续补齐数据结构、计算机网络等基础。
+            </p>
+            <ul class="mini-list">
+              <li>正在学习：Spring Boot 与 MySQL 的配合</li>
+              <li>喜欢：把页面做得干净、把接口写得清楚</li>
+              <li>目标：能独立完成一个完整的前后端小系统</li>
+            </ul>
+          </article>
 
-    <footer>
-      <!-- 年份可自行修改 -->
-      <p>© 2026 WuyShan · 本页面托管在 GitHub</p>
-    </footer>
-  </div>
+          <article class="about-card dark" data-reveal>
+            <h3>Side B · 关于音乐</h3>
+            <p>
+              音乐对我来说不是背景音，而是另一种整理思绪的方式。
+              写代码卡住的时候，我会离开屏幕几分钟，让一段器乐把注意力重新校准。
+            </p>
+            <div class="covers" aria-hidden="true">
+              <div class="cover cover-one"></div>
+              <div class="cover cover-two"></div>
+              <div class="cover cover-three"></div>
+              <div class="tonearm"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 02 music -->
+      <section class="section" id="music">
+        <div class="section-head" data-reveal>
+          <p class="section-index">02 / Music DNA</p>
+          <div>
+            <h2 class="section-title">我的耳朵，<br>大概由这<em>几个频段</em>组成。</h2>
+            <p class="section-lede">
+              没有固定的“最爱歌手”，更多是按场景选声音。
+              下面不是精确的听歌统计，只是我对自己听觉习惯的一次混音。
+            </p>
+          </div>
+        </div>
+
+        <div class="dna-grid">
+          <article class="dna-card" data-reveal>
+            <div class="dna-genre"><strong>古典</strong><span>35%</span></div>
+            <p class="dna-en">Classical / Piano</p>
+            <div class="dna-track"><span style="--w: 82%"></span></div>
+            <p class="dna-note">深夜、雨天、需要专注的时候</p>
+          </article>
+
+          <article class="dna-card" data-reveal>
+            <div class="dna-genre"><strong>后摇</strong><span>25%</span></div>
+            <p class="dna-en">Post-rock / Instrumental</p>
+            <div class="dna-track"><span style="--w: 64%"></span></div>
+            <p class="dna-note">情绪需要慢慢展开的时候</p>
+          </article>
+
+          <article class="dna-card" data-reveal>
+            <div class="dna-genre"><strong>City Pop</strong><span>22%</span></div>
+            <p class="dna-en">City Pop / Jazz Funk</p>
+            <div class="dna-track"><span style="--w: 56%"></span></div>
+            <p class="dna-note">通勤、傍晚、给画面加一层暖色</p>
+          </article>
+
+          <article class="dna-card" data-reveal>
+            <div class="dna-genre"><strong>Lo-fi</strong><span>18%</span></div>
+            <p class="dna-en">Lo-fi / Ambient</p>
+            <div class="dna-track"><span style="--w: 46%"></span></div>
+            <p class="dna-note">写代码时的稳定低频</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 03 playlists -->
+      <section class="section" id="playlists">
+        <div class="section-head" data-reveal>
+          <p class="section-index">03 / Playlists</p>
+          <div>
+            <h2 class="section-title">按场景分轨，<br>而不是按<em>心情打分</em>。</h2>
+            <p class="section-lede">
+              我的歌单通常以“正在做什么”命名。音乐不负责替我表达，
+              只负责把当下的空间调成合适的混响。
+            </p>
+          </div>
+        </div>
+
+        <div class="playlist-grid">
+          <article class="playlist-card" data-reveal>
+            <div class="playlist-art art-night"></div>
+            <div class="playlist-body">
+              <p class="playlist-kicker">Late Night / Focus</p>
+              <h3>深夜编码</h3>
+              <p>没有鼓点，只有稳定的低频。适合把 bug 一个个关掉，也适合把思路慢慢摊开。</p>
+              <div class="playlist-meta"><span>12 tracks</span><span>48 min</span></div>
+            </div>
+          </article>
+
+          <article class="playlist-card" data-reveal>
+            <div class="playlist-art art-city"></div>
+            <div class="playlist-body">
+              <p class="playlist-kicker">Commute / Morning</p>
+              <h3>通勤路上</h3>
+              <p>City Pop 和一点爵士，给早晨加一层柔光。车窗外的城市，比平时更像电影。</p>
+              <div class="playlist-meta"><span>18 tracks</span><span>62 min</span></div>
+            </div>
+          </article>
+
+          <article class="playlist-card" data-reveal>
+            <div class="playlist-art art-weekend"></div>
+            <div class="playlist-body">
+              <p class="playlist-kicker">Weekend / Slow</p>
+              <h3>周末放空</h3>
+              <p>后摇、器乐、电影原声。不急着去哪里，让时间在房间里多停一会儿。</p>
+              <div class="playlist-meta"><span>15 tracks</span><span>71 min</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 04 skills -->
+      <section class="section" id="skills">
+        <div class="section-head" data-reveal>
+          <p class="section-index">04 / Stack</p>
+          <div>
+            <h2 class="section-title">像调音台一样，<br>把每个<em>频段</em>调好。</h2>
+            <p class="section-lede">
+              下面是我目前的技术栈。不是满格，只是如实记录每个频段现在推到了哪里。
+            </p>
+          </div>
+        </div>
+
+        <div class="skills">
+          <div class="skill" data-reveal>
+            <span class="skill-index">01</span>
+            <span class="skill-name">Java</span>
+            <div class="skill-bar"><span style="--w: 86%"></span></div>
+            <span class="skill-level">日常使用</span>
+          </div>
+          <div class="skill" data-reveal>
+            <span class="skill-index">02</span>
+            <span class="skill-name">Spring Boot</span>
+            <div class="skill-bar"><span style="--w: 74%"></span></div>
+            <span class="skill-level">持续练习</span>
+          </div>
+          <div class="skill" data-reveal>
+            <span class="skill-index">03</span>
+            <span class="skill-name">MySQL</span>
+            <div class="skill-bar"><span style="--w: 70%"></span></div>
+            <span class="skill-level">基础掌握</span>
+          </div>
+          <div class="skill" data-reveal>
+            <span class="skill-index">04</span>
+            <span class="skill-name">HTML / CSS</span>
+            <div class="skill-bar"><span style="--w: 82%"></span></div>
+            <span class="skill-level">常用</span>
+          </div>
+          <div class="skill" data-reveal>
+            <span class="skill-index">05</span>
+            <span class="skill-name">JavaScript</span>
+            <div class="skill-bar"><span style="--w: 66%"></span></div>
+            <span class="skill-level">在学</span>
+          </div>
+          <div class="skill" data-reveal>
+            <span class="skill-index">06</span>
+            <span class="skill-name">Git</span>
+            <div class="skill-bar"><span style="--w: 72%"></span></div>
+            <span class="skill-level">日常使用</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 contact -->
+      <section class="contact" id="contact" data-reveal>
+        <p class="contact-kicker">05 / Contact</p>
+        <h2>一起听歌，<br>或者一起<em>写代码</em>。</h2>
+        <p>
+          如果你也在学 Java / Web，或者只是想交换一张歌单，欢迎给我发邮件。
+          我通常会在一两天内回复。
+        </p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:1932716881@qq.com">
+            1932716881@qq.com
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M4 6h16v12H4zM4 7l8 6 8-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/WuyShan" target="_blank" rel="noopener">
+            github.com/WuyShan
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>© 2026 WuyShan</span>
+        <span>Code on Side A · Music on Side B</span>
+        <span>Built with HTML, CSS &amp; a quiet playlist</span>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    document.documentElement.classList.add('js');
+
+    /* Reveal on scroll */
+    (function () {
+      const items = document.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+
+    /* Generative ambient player */
+    (function () {
+      const player = document.getElementById('player');
+      const button = document.getElementById('playBtn');
+      const progressBar = document.getElementById('progressBar');
+      const elapsedEl = document.getElementById('elapsed');
+      if (!player || !button) return;
+
+      const chords = [
+        [130.81, 196.00, 246.94, 329.63], // Cmaj9
+        [110.00, 164.81, 196.00, 261.63], // Amin9
+        [87.31, 130.81, 174.61, 220.00],  // Fmaj7
+        [98.00, 146.83, 196.00, 246.94]   // G6
+      ];
+
+      let audioCtx = null;
+      let master = null;
+      let voices = [];
+      let chordTimer = null;
+      let tickTimer = null;
+      let chordIndex = 0;
+      let accumulated = 0;
+      let startedAt = 0;
+      let playing = false;
+      let closing = false;
+
+      function format(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return m + ':' + String(s).padStart(2, '0');
+      }
+
+      function buildAudio() {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return false;
+
+        audioCtx = new Ctx();
+        master = audioCtx.createGain();
+        master.gain.value = 0.0001;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 820;
+        filter.Q.value = 0.6;
+
+        const delay = audioCtx.createDelay(1);
+        delay.delayTime.value = 0.32;
+
+        const feedback = audioCtx.createGain();
+        feedback.gain.value = 0.2;
+
+        const wet = audioCtx.createGain();
+        wet.gain.value = 0.22;
+
+        master.connect(filter);
+        filter.connect(audioCtx.destination);
+        filter.connect(delay);
+        delay.connect(feedback);
+        feedback.connect(delay);
+        delay.connect(wet);
+        wet.connect(audioCtx.destination);
+
+        voices = chords[chordIndex].map(function (freq, index) {
+          const osc = audioCtx.createOscillator();
+          osc.type = index === 0 ? 'triangle' : 'sine';
+          osc.frequency.value = freq;
+          osc.detune.value = index % 2 ? 4 : -4;
+
+          const voiceGain = audioCtx.createGain();
+          voiceGain.gain.value = index === 0 ? 0.46 : 0.2;
+          osc.connect(voiceGain);
+          voiceGain.connect(master);
+          osc.start();
+          return osc;
+        });
+        return true;
+      }
+
+      function nextChord() {
+        if (!audioCtx || !voices.length) return;
+        chordIndex = (chordIndex + 1) % chords.length;
+        const now = audioCtx.currentTime;
+        voices.forEach(function (osc, index) {
+          osc.frequency.cancelScheduledValues(now);
+          osc.frequency.linearRampToValueAtTime(chords[chordIndex][index], now + 1.8);
+        });
+      }
+
+      function updateClock() {
+        const current = accumulated + (playing ? Date.now() - startedAt : 0);
+        const seconds = current / 1000;
+        elapsedEl.textContent = format(seconds);
+        progressBar.style.width = ((seconds % 28) / 28 * 100).toFixed(2) + '%';
+      }
+
+      function play() {
+        if (playing || closing) return;
+        if (!buildAudio()) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        master.gain.cancelScheduledValues(now);
+        master.gain.setValueAtTime(0.0001, now);
+        master.gain.exponentialRampToValueAtTime(0.055, now + 1.6);
+
+        playing = true;
+        startedAt = Date.now();
+        player.dataset.playing = 'true';
+        button.setAttribute('aria-pressed', 'true');
+        button.setAttribute('aria-label', '暂停 Quiet Room');
+
+        chordTimer = setInterval(nextChord, 7000);
+        tickTimer = setInterval(updateClock, 400);
+        updateClock();
+      }
+
+      function pause() {
+        if (!playing) return;
+        playing = false;
+        accumulated += Date.now() - startedAt;
+        player.dataset.playing = 'false';
+        button.setAttribute('aria-pressed', 'false');
+        button.setAttribute('aria-label', '播放 Quiet Room');
+
+        clearInterval(chordTimer);
+        clearInterval(tickTimer);
+        updateClock();
+
+        if (!audioCtx || !master) return;
+        closing = true;
+        const ctx = audioCtx;
+        const end = ctx.currentTime + 0.5;
+        master.gain.cancelScheduledValues(ctx.currentTime);
+        master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), ctx.currentTime);
+        master.gain.exponentialRampToValueAtTime(0.0001, end);
+
+        const currentVoices = voices.slice();
+        voices = [];
+        audioCtx = null;
+        master = null;
+
+        setTimeout(function () {
+          currentVoices.forEach(function (osc) {
+            try { osc.stop(); } catch (e) { /* already stopped */ }
+          });
+          ctx.close().catch(function () {});
+          closing = false;
+        }, 560);
+      }
+
+      button.addEventListener('click', function () {
+        if (playing) pause(); else play();
+      });
+    })();
+  </script>
 </body>
 </html>
